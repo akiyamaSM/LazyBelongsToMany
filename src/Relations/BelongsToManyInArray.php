@@ -5,7 +5,9 @@ namespace Inani\LazyBelongsToMany\Relations;
 
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use PhpParser\Builder;
 
 class BelongsToManyInArray extends BelongsTo
 {
@@ -15,7 +17,7 @@ class BelongsToManyInArray extends BelongsTo
     protected $localKey;
     protected static $constraints = false;
 
-    public function __construct($query, $instance, $localKey)
+    public function __construct($query, Model $instance, $localKey)
     {
         $this->query = $query;
         $this->instance = $instance;
@@ -38,8 +40,8 @@ class BelongsToManyInArray extends BelongsTo
     {
         $ids  = [];
         foreach ($models as $model){
-            if(is_array($model->posts_id)){
-                $ids = array_merge($ids, $model->posts_id);
+            if(is_array($model->{$this->getLocalKey()})){
+                $ids = array_merge($ids, $model->{$this->getLocalKey()});
             }
         }
 
@@ -50,6 +52,7 @@ class BelongsToManyInArray extends BelongsTo
     {
         return $this->localKey;
     }
+
     public function match(array $models, Collection $results, $relation): array
     {
         $results = $this->query->whereIn(
@@ -58,11 +61,8 @@ class BelongsToManyInArray extends BelongsTo
         )->get();
 
         foreach ($models as $model){
-            $posts = $results->whereIn($this->getRelatedFullyKeyName(), $model->{$this->getLocalKey()});
-
-            $model->setRelation(
-                $relation, $this->related->newCollection($posts->all())
-            );
+            $records = $results->whereIn($this->related->getKeyName(), $model->{$this->getLocalKey()});
+            $model->setRelation($relation, $records);
         }
 
         return $models;
@@ -73,6 +73,7 @@ class BelongsToManyInArray extends BelongsTo
         if(!is_array($this->instance->{$this->getLocalKey()})){
             return $this->related->newCollection();
         }
+
         return $this->query->whereIn($this->getRelatedFullyKeyName(), $this->instance->{$this->getLocalKey()})->get();
     }
 
