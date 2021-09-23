@@ -17,12 +17,5 @@
     },
     "require": {
         "illuminate/support": "~8"
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Inani\\Larapoll\\LarapollServiceProvider"
-            ]
-        }
     }
 }
