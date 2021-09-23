@@ -1,5 +1,5 @@
 {
-    "name": "inani/lazy-belongs-To-Many",
+    "name": "inani/LazyBelongsToMany",
     "description": "A lightweight implementation of Laravel's BelongsToMany relationship",
     "keywords": ["eloquent", "model", "laravel", "php", "relationship", "pivot"],
     "license": "MIT",
