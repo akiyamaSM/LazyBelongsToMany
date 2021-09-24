@@ -19,6 +19,8 @@ Suppose we have the following database structure. A ``User`` can be linked to on
 
 ````php
 
+<?php
+
 namespace Models;
 
 use Illuminate\Database\Eloquent\Model;
