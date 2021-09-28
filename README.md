@@ -1,5 +1,5 @@
 # LazyBelongsToMany
-A lightweigth implementation of Laravel's belongs To many relationship in cases you don't need pivot table.
+A lightweight implementation of Laravel's belongs To many relationship in cases you don't need pivot table.
 
 ## Installation
 
